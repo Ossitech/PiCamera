@@ -6,8 +6,8 @@ import time
 import os
 from threading import Thread
 
-PHOTOS_PATH = "../photos"
-VIDEOS_PATH = "../videos"
+PHOTOS_PATH = "~/Desktop/photos"
+VIDEOS_PATH = "~/Desktop/videos"
 
 class Camera:
     def __init__(self, screen_size, preview_framerate):

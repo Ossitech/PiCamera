@@ -21,4 +21,4 @@ while True:
     test_slider.draw(screen)
     test_slider.handle_input()
 
-    pygame.display.update();
+    pygame.display.update()

@@ -1,0 +1,4 @@
+pygame-ce
+pygame-gui
+opencv-python
+numpy
