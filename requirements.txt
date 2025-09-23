@@ -2,3 +2,4 @@ pygame-ce
 pygame-gui
 opencv-python
 numpy
+picamera2
