@@ -108,6 +108,9 @@ class CameraApp:
                 exposure_time = int(10 ** log_value)
                 self.camera.set_exposure_time(exposure_time)
                 self.exposure_label.set_text(f"{exposure_time/1000:.1f} ms" if exposure_time < 1000000 else f"{exposure_time/1000000:.2f} s")
+            if event.type == pygame.KEYUP:
+                if event.key == pygame.K_ESCAPE:
+                    self.quit()
         for button, action in self.camera_controls.get_events():
             print(button, action)
             if button == hardware_controls.EVENT_BUTTON and action == hardware_controls.EVENT_DOWN:
@@ -120,6 +123,7 @@ class CameraApp:
         self.camera.stop_preview()
         self.camera_controls.quit()
         pygame.quit()
+        exit()
 
     def calc_centered_rect_pos_in_rect(outer_size: tuple, inner_size: tuple):
         return (int(outer_size[0] / 2 - inner_size[0] / 2), int(outer_size[1] / 2 - inner_size[1] / 2))
