@@ -75,11 +75,15 @@ class CameraApp:
     
     def toggle_menu(self):
         if self.menu_panel.visible:
+            # self.menu_panel.visible = False
             self.menu_panel.visible = False
             self.menu_button.set_text("Menu")
         else:
             self.menu_panel.visible = True
             self.menu_button.set_text("Close")
+        
+        self.lel.visible = self.menu_panel.visible
+        self.a.visible = self.menu_panel.visible
 
     def build_ui(self):
         # pygame_gui
@@ -96,12 +100,22 @@ class CameraApp:
             manager=self.ui_manager,
             command=self.quit
         )
-        self.menu_visible = False
         self.menu_panel = pygame_gui.elements.UIPanel(
             relative_rect=pygame.Rect((60, 60), (SCREEN_SIZE[0] - 120, SCREEN_SIZE[1] - 120)),
-            # starting_layer_height=1,
             manager=self.ui_manager,
             visible=False
+        )
+
+        self.lel = pygame_gui.elements.UIProgressBar(
+            relative_rect=pygame.Rect((100, 100), (100, 100)),
+            manager=self.ui_manager
+        )
+
+        self.a = pygame_gui.elements.UIButton(
+            relative_rect=pygame.Rect((100, 200), (50, 40)),
+            text="Test",
+            manager=self.ui_manager,
+            container=self.menu_panel
         )
 
 
