@@ -1,4 +1,8 @@
-import RPi.GPIO as GPIO
+try:
+    import RPi.GPIO as GPIO
+    onPi = True
+except:
+    onPi = False
 import time
 from threading import Thread
 
@@ -25,20 +29,21 @@ ROTATION_CCW = 2
 
 class CameraControls:
     def __init__(self):
-        GPIO.setmode(GPIO.BOARD)
+        if onPi:
+            GPIO.setmode(GPIO.BOARD)
 
-        GPIO.setup(PIN_CLOCK, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-        GPIO.setup(PIN_DT, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-        GPIO.setup(PIN_SW, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+            GPIO.setup(PIN_CLOCK, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+            GPIO.setup(PIN_DT, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+            GPIO.setup(PIN_SW, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
-        GPIO.setup(PIN_BUTTON, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+            GPIO.setup(PIN_BUTTON, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
-        GPIO.add_event_detect(PIN_CLOCK, GPIO.BOTH, callback=self.on_clock_or_dt)
-        GPIO.add_event_detect(PIN_DT, GPIO.BOTH, callback=self.on_clock_or_dt)
-        
-        GPIO.add_event_detect(PIN_SW, GPIO.BOTH, callback=self.on_sw, bouncetime=BOUNCETIME)
+            GPIO.add_event_detect(PIN_CLOCK, GPIO.BOTH, callback=self.on_clock_or_dt)
+            GPIO.add_event_detect(PIN_DT, GPIO.BOTH, callback=self.on_clock_or_dt)
+            
+            GPIO.add_event_detect(PIN_SW, GPIO.BOTH, callback=self.on_sw, bouncetime=BOUNCETIME)
 
-        GPIO.add_event_detect(PIN_BUTTON, GPIO.BOTH, callback=self.on_button, bouncetime=BOUNCETIME)
+            GPIO.add_event_detect(PIN_BUTTON, GPIO.BOTH, callback=self.on_button, bouncetime=BOUNCETIME)
 
         self.events = []
 
@@ -52,7 +57,8 @@ class CameraControls:
         # 10 clk 1
         # 01 dt 1
         # 11 both 1
-        new_state = 10 * GPIO.input(PIN_DT) + GPIO.input(PIN_CLOCK)
+        if onPi:
+            new_state = 10 * GPIO.input(PIN_DT) + GPIO.input(PIN_CLOCK)
 
         if self.state == 0:
             if new_state == 1:
@@ -98,4 +104,5 @@ class CameraControls:
         return events
     
     def quit(self):
-        GPIO.cleanup()
+        if onPi:
+            GPIO.cleanup()

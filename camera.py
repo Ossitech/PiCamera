@@ -1,6 +1,10 @@
 import pygame
 import cv2
-import picamera2
+try:
+    import picamera2
+    onPi = True
+except:
+    onPi = False
 import numpy as np
 import time
 import os
@@ -14,13 +18,14 @@ class Camera:
         self.screen_size = screen_size
         self.preview_framerate = preview_framerate
 
-        self.picamera = picamera2.Picamera2()
-        self.preview_config = self.picamera.create_preview_configuration({'format': 'RGB888', 'size': screen_size})
-        self.photo_config = self.picamera.create_still_configuration()
-        self.picamera.configure(self.preview_config)
-        self.picamera.resolution = screen_size
-        self.picamera.framerate = 60
-        self.picamera.start()
+        if onPi:
+            self.picamera = picamera2.Picamera2()
+            self.preview_config = self.picamera.create_preview_configuration({'format': 'RGB888', 'size': screen_size})
+            self.photo_config = self.picamera.create_still_configuration()
+            self.picamera.configure(self.preview_config)
+            self.picamera.resolution = screen_size
+            self.picamera.framerate = 60
+            self.picamera.start()
 
         self.preview_frame_available = False
         self._preview_frame = None
@@ -30,8 +35,9 @@ class Camera:
         self._clock = pygame.time.Clock()
     
     def start_preview(self):
-        self._preview_running = True
-        self._preview_thread.start()
+        if onPi:
+            self._preview_running = True
+            self._preview_thread.start()
     
     def stop_preview(self):
         self._preview_running = False
@@ -55,17 +61,20 @@ class Camera:
     
     def take_photo(self):
         filename = time.strftime("%Y.%m.%d_%H-%M-%S.jpg")
-        self.picamera.switch_mode_and_capture_file(self.photo_config, os.path.join(PHOTOS_PATH, filename))
+        if onPi:
+            self.picamera.switch_mode_and_capture_file(self.photo_config, os.path.join(PHOTOS_PATH, filename))
 
     def set_exposure_time(self, exposure_time_us):
         """
         Setzt die Belichtungszeit der Kamera auf einen festen Wert (in Mikrosekunden).
         exposure_time_us: int, Belichtungszeit in Mikrosekunden
         """
-        self.picamera.set_controls({"ExposureTime": exposure_time_us, "AeEnable": False})
+        if onPi:
+            self.picamera.set_controls({"ExposureTime": exposure_time_us, "AeEnable": False})
 
     def set_auto_exposure(self):
         """
         Setzt die Belichtungszeit der Kamera auf Automatik (AE = Auto Exposure).
         """
-        self.picamera.set_controls({"AeEnable": True})
+        if onPi:
+            self.picamera.set_controls({"AeEnable": True})
