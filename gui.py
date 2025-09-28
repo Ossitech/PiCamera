@@ -21,8 +21,8 @@ class Gui:
             command=self.toggle_menu
         )
         self.exit_button = pygame_gui.elements.UIButton(
-            relative_rect=pygame.Rect((self.screen_width - 10 - 50, 10), (50, 40)),
-            text='Exit',
+            relative_rect=pygame.Rect((self.screen_width - 10 - 50, 10), (30, 38)),
+            text='X',
             manager=self.ui_manager,
             command=self.exit_callback
         )
