@@ -10,8 +10,8 @@ import time
 import os
 from threading import Thread
 
-PHOTOS_PATH = "~/Desktop/photos"
-VIDEOS_PATH = "~/Desktop/videos"
+PHOTOS_PATH = "~/Synchronisierte Dateien/Pi Camera/photos"
+VIDEOS_PATH = "~/Synchronisierte Dateien/Pi Camera/videos"
 
 class Camera:
     def __init__(self, screen_size, preview_framerate):
