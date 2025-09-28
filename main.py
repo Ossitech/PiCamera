@@ -2,10 +2,10 @@ import pygame
 import os
 import random
 import time
+import numpy as np
 import camera
 import hardware_controls
-import pygame_gui
-import numpy as np
+from gui import Gui
 
 pygame.init()
 
@@ -25,11 +25,13 @@ class CameraApp:
         self.current_preview_frame = None
         self.camera_controls = hardware_controls.CameraControls()
 
-        self.build_ui()
+        self.gui = Gui(SCREEN_SIZE)
+        self.gui.setup()
 
     def run(self):
         self.running = True
         self.camera.start_preview()
+
         while self.running:
             self.handle_events()
             self.screen.fill((0, 0, 0))
@@ -39,13 +41,14 @@ class CameraApp:
                 self.screen.blit(self.no_signal_image, (0, 0))
             else:
                 self.screen.blit(self.current_preview_frame, (0, 0))
-            self.ui_manager.draw_ui(self.screen)
+
+            self.gui.draw(self.screen)
+
             pygame.display.update()
+
             self.delta = self.clock.tick(FPS) * 0.001
 
     def handle_events(self):
-        time_delta = self.clock.tick(FPS)/1000.0
-
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.quit()
@@ -53,8 +56,8 @@ class CameraApp:
                 if event.key == pygame.K_ESCAPE:
                     self.quit()
 
-            self.ui_manager.process_events(event)
-            self.ui_manager.update(time_delta)
+            self.gui.process_events(event)
+        self.gui.update(self.delta)
 
         for button, action in self.camera_controls.get_events():
             print(button, action)
@@ -69,54 +72,6 @@ class CameraApp:
         self.camera_controls.quit()
         pygame.quit()
         exit()
-
-    def calc_centered_rect_pos_in_rect(outer_size: tuple, inner_size: tuple):
-        return (int(outer_size[0] / 2 - inner_size[0] / 2), int(outer_size[1] / 2 - inner_size[1] / 2))
-    
-    def toggle_menu(self):
-        if self.menu_panel.visible:
-            # self.menu_panel.visible = False
-            self.menu_panel.visible = False
-            self.menu_button.set_text("Menu")
-        else:
-            self.menu_panel.visible = True
-            self.menu_button.set_text("Close")
-        
-        self.lel.visible = self.menu_panel.visible
-        self.a.visible = self.menu_panel.visible
-
-    def build_ui(self):
-        # pygame_gui
-        self.ui_manager = pygame_gui.UIManager(SCREEN_SIZE)
-        self.menu_button = pygame_gui.elements.UIButton(
-            relative_rect=pygame.Rect((10, 10), (50, 40)),
-            text='Menu',
-            manager=self.ui_manager,
-            command=self.toggle_menu
-        )
-        self.exit_button = pygame_gui.elements.UIButton(
-            relative_rect=pygame.Rect((SCREEN_SIZE[0] - 10 - 50, 10), (50, 40)),
-            text='Exit',
-            manager=self.ui_manager,
-            command=self.quit
-        )
-        self.menu_panel = pygame_gui.elements.UIPanel(
-            relative_rect=pygame.Rect((60, 60), (SCREEN_SIZE[0] - 120, SCREEN_SIZE[1] - 120)),
-            manager=self.ui_manager,
-            visible=False
-        )
-
-        self.lel = pygame_gui.elements.UIProgressBar(
-            relative_rect=pygame.Rect((100, 100), (100, 100)),
-            manager=self.ui_manager
-        )
-
-        self.a = pygame_gui.elements.UIButton(
-            relative_rect=pygame.Rect((100, 200), (50, 40)),
-            text="Test",
-            manager=self.ui_manager,
-            container=self.menu_panel
-        )
 
 
 if __name__ == "__main__":
