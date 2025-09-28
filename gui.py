@@ -33,7 +33,7 @@ class Gui:
         self.exposure_slider = pygame_gui.elements.UIHorizontalSlider(
             relative_rect=pygame.Rect((100, 100), (600, 50)),
             manager=self.ui_manager,
-            # container=self.menu_panel,
+            container=self.menu_panel,
             start_value=0,
             value_range=(0, 100),
             click_increment=1,
@@ -42,6 +42,7 @@ class Gui:
         self.exposure_label = pygame_gui.elements.UILabel(
             relative_rect=pygame.Rect((100, 210), (200, 50)),
             manager=self.ui_manager,
+            container=self.menu_panel,
             text=f"Auto Exposure"
         )
 
