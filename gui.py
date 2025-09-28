@@ -20,7 +20,7 @@ class Gui:
             relative_rect=pygame.Rect((self.screen_width - 10 - 50, 10), (50, 40)),
             text='Exit',
             manager=self.ui_manager,
-            command=exit
+            command=self.exit_callback
         )
         self.menu_panel = pygame_gui.elements.UIPanel(
             relative_rect=pygame.Rect((60, 60), (self.screen_width - 120, self.screen_height - 120)),
@@ -75,3 +75,6 @@ class Gui:
     # which is the exposure time in us.
     def set_exposure_time_callback(self, callback):
         self.exposure_time_changed_callback = callback
+    
+    def set_exit_callback(self, callback):
+        self.exit_callback = callback
