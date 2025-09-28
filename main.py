@@ -56,7 +56,7 @@ class CameraApp:
                 if event.key == pygame.K_ESCAPE:
                     self.quit()
 
-            self.gui.process_events(event)
+            self.gui.process_event(event)
         self.gui.update(self.delta)
 
         for button, action in self.camera_controls.get_events():
@@ -72,6 +72,13 @@ class CameraApp:
         self.camera_controls.quit()
         pygame.quit()
         exit()
+    
+    def _on_exposure_changed(self, exposure_time_us: int):
+        if exposure_time_us == 0:
+            self.camera.set_auto_exposure()
+            return
+        
+        self.camera.set_exposure_time(exposure_time_us)
 
 
 if __name__ == "__main__":
