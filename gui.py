@@ -1,6 +1,8 @@
 import pygame
 import pygame_gui
 
+HIDE_OFFSET = 1000
+
 class Gui:
     def __init__(self, screen_size: tuple[int, int]):
         self.screen_size = screen_size
@@ -25,13 +27,12 @@ class Gui:
             command=self.exit_callback
         )
         self.menu_panel = pygame_gui.elements.UIPanel(
-            relative_rect=pygame.Rect((60, 60), (self.screen_width - 120, self.screen_height - 120)),
+            relative_rect=pygame.Rect((60, 60 - HIDE_OFFSET), (self.screen_width - 120, self.screen_height - 120)),
             manager=self.ui_manager,
-            visible=False
         )
 
         self.exposure_slider = pygame_gui.elements.UIHorizontalSlider(
-            relative_rect=pygame.Rect((100, 100), (600, 50)),
+            relative_rect=pygame.Rect((100, 100), (480, 50)),
             manager=self.ui_manager,
             container=self.menu_panel,
             start_value=0,
@@ -49,12 +50,15 @@ class Gui:
         self.setup_finished = True
     
     def toggle_menu(self):
-        if self.menu_panel.visible:
-            # self.menu_panel.visible = False
-            self.menu_panel.visible = False
+        rect = self.menu_panel.relative_rect
+        # currently visible
+        if rect.y > 0:
+            # hide by moving out of view.
+            self.menu_panel.set_relative_position((rect.x, rect.y - HIDE_OFFSET))
             self.menu_button.set_text("Menu")
         else:
-            self.menu_panel.visible = True
+            # show by moving back into view.
+            self.menu_panel.set_relative_position((rect.x, rect.y + HIDE_OFFSET))
             self.menu_button.set_text("Close")
     
     def process_event(self, event):
