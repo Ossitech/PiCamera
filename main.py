@@ -26,9 +26,9 @@ class CameraApp:
         self.camera_controls = hardware_controls.CameraControls()
 
         self.gui = Gui(SCREEN_SIZE)
-        self.gui.setup()
         self.gui.set_exposure_time_callback(self._on_exposure_changed)
         self.gui.set_exit_callback(self.quit)
+        self.gui.setup()
 
     def run(self):
         self.running = True

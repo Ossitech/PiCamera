@@ -7,6 +7,8 @@ class Gui:
         self.screen_width = screen_size[0]
         self.screen_height = screen_size[1]
         self.exposure_time_changed_callback = None
+        self.exit_callback = None
+        self.setup_finished = False
 
     def setup(self):
         self.ui_manager = pygame_gui.UIManager(self.screen_size)
@@ -42,6 +44,8 @@ class Gui:
             manager=self.ui_manager,
             text=f"Auto Exposure"
         )
+
+        self.setup_finished = True
     
     def toggle_menu(self):
         if self.menu_panel.visible:
@@ -74,7 +78,13 @@ class Gui:
     # callback must be a function that receives an int value,
     # which is the exposure time in us.
     def set_exposure_time_callback(self, callback):
+        if self.setup_finished:
+            raise Exception("Can't set callback after setup was called!")
+        
         self.exposure_time_changed_callback = callback
     
     def set_exit_callback(self, callback):
+        if self.setup_finished:
+            raise Exception("Can't set callback after setup was called!")
+        
         self.exit_callback = callback
