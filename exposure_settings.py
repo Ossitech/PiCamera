@@ -14,12 +14,12 @@ class ExposureSettings(HidablePanel):
             manager=self.ui_manager,
             container=self.panel,
             start_value=0,
-            value_range=(0.0, 100.0),
+            value_range=(0.0, 1.0),
             click_increment=0.01,
         )
 
         self.exposure_label = pygame_gui.elements.UILabel(
-            relative_rect=pygame.Rect((150, 15), (300, 50)),
+            relative_rect=pygame.Rect((100, 15), (400, 50)),
             manager=self.ui_manager,
             container=self.panel,
             text=f"Auto Exposure",
@@ -36,22 +36,25 @@ class ExposureSettings(HidablePanel):
         if self.exposure_slider.current_value == 0:
             self.exposure_label.set_text("Auto exposure")
         else:
-            self.exposure_label.set_text(f"Exposure time (us): {log_scale(self.exposure_slider.current_value)}")
+            scaled_value = exposure_scale(self.exposure_slider.current_value)
+            formated_value = format_microseconds(scaled_value)
+            self.exposure_label.set_text(f"Exposure time: {formated_value}")
 
         if self.callback:
             self.callback(self.exposure_slider.current_value)
     
-def log_scale(x: float, in_min: float = 0, in_max: float = 100, out_max: float = 200_000_000) -> float:
-    if not (in_min <= x <= in_max):
-        raise ValueError(f"Wert {x} liegt außerhalb des Eingabebereichs [{in_min}, {in_max}]")
+def exposure_scale(x: float):
+    return 200_000_000 * (x ** 7.388)
 
-    # Damit log(0) nicht auftritt, verschieben wir den Wertebereich leicht
-    # z.B. Eingabe 0 → log(1), Eingabe 100 → log(B)
-    shift = 1
-    base = (in_max + shift)
-
-    # normierte logarithmische Skala von 0..1
-    norm = np.log(x + shift) / np.log(base)
-
-    # auf den Zielbereich skalieren
-    return norm * out_max
+def format_microseconds(value: int) -> str:
+    if value >= 60_000_000:
+        minutes = value / 60_000_000
+        return f"{minutes:.2f} minutes"
+    elif value >= 1_000_000:
+        seconds = value / 1_000_000
+        return f"{seconds:.2f} seconds"
+    elif value >= 1_000:
+        millis = value / 1_000
+        return f"{millis:.0f} milliseconds"
+    else:
+        return f"{value:.0f} microseconds"
