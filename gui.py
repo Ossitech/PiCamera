@@ -1,7 +1,7 @@
 import pygame
 import pygame_gui
 
-from exposure_settings import ExposureSettings
+from main_menu import MainMenu
 
 HIDE_OFFSET = 1000
 
@@ -20,34 +20,26 @@ class Gui:
             relative_rect=pygame.Rect((10, 10), (50, 40)),
             text='Menu',
             manager=self.ui_manager,
-            command=self.toggle_menu
-        )
-        self.exit_button = pygame_gui.elements.UIButton(
-            relative_rect=pygame.Rect((self.screen_width - 10 - 50, 10), (30, 38)),
-            text='X',
-            manager=self.ui_manager,
-            command=self.exit_callback
+            command=self.show_menu
         )
 
-        self.exposure_settings = ExposureSettings(
+        self.main_menu = MainMenu(
             self.ui_manager,
-            self.exposure_time_changed_callback
+            self.exposure_time_changed_callback,
+            self.exit_callback,
+            self.on_menu_closed
         )
-        self.exposure_settings.hide()
+        self.main_menu.hide()
 
         self.setup_finished = True
     
-    def toggle_menu(self):
-        if self.exposure_settings.is_visible():
-            self.exposure_settings.hide()
-            self.menu_button.set_text("Menu")
-        else:
-            self.exposure_settings.show()
-            self.menu_button.set_text("Close")
+    def show_menu(self):
+        self.menu_button.hide()
+        self.main_menu.show()
     
     def process_event(self, event):
         self.ui_manager.process_events(event)
-        self.exposure_settings.process_event(event)
+        self.main_menu.process_event(event)
 
     def update(self, delta: float):
         self.ui_manager.update(delta)
@@ -68,3 +60,6 @@ class Gui:
             raise Exception("Can't set callback after setup was called!")
         
         self.exit_callback = callback
+    
+    def on_menu_closed(self):
+        self.menu_button.visible = True
