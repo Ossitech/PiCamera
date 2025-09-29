@@ -48,8 +48,9 @@ def exposure_scale(x: float):
 
 def format_microseconds(value: int) -> str:
     if value >= 60_000_000:
-        minutes = value / 60_000_000
-        return f"{minutes:.2f} minutes"
+        minutes = int(value / 60_000_000)
+        seconds = int(((value / 60_000_000) - minutes) * 60)
+        return f"{minutes}:{seconds:02d} minutes"
     elif value >= 1_000_000:
         seconds = value / 1_000_000
         return f"{seconds:.2f} seconds"
