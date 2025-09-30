@@ -71,8 +71,8 @@ class Camera:
         """
         if onPi:
             # self.picamera.set_controls({"ExposureTime": exposure_time_us, "AeEnable": False})
-            self.picamera.still_configuration.controls.ExposureTime = exposure_time_us
-            self.picamera.still_configuration.controls.AeEnable = False
+            self.picamera.controls.ExposureTime = exposure_time_us
+            self.picamera.controls.AeEnable = False
 
     def set_auto_exposure(self):
         """
@@ -81,3 +81,7 @@ class Camera:
         if onPi:
             # self.picamera.set_controls({"AeEnable": True})
             self.picamera.still_configuration.controls.AeEnable = True
+    
+    def set_color_gains(self, red, blue):
+        if onPi:
+            self.picamera.controls.ColourGains = (red, blue)
