@@ -71,7 +71,6 @@ class Camera:
         """
         if onPi:
             self.picamera.set_controls({"ExposureTime": exposure_time_us, "AeEnable": False})
-            print("LEL")
 
     def set_auto_exposure(self):
         """
@@ -83,7 +82,6 @@ class Camera:
     def set_color_gains(self, red, blue):
         if onPi:
             self.picamera.set_controls({"ColourGains": (red, blue)})
-            print("LOL")
     
     def quit(self):
         if onPi:
