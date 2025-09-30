@@ -54,7 +54,7 @@ class ExposureSettings(HidablePanel):
             self.exposure_label.set_text(f"Exposure Time: {formated_value}")
 
         if self.callback:
-            self.callback(self.exposure_slider.current_value)
+            self.callback(int(self.exposure_slider.current_value))
     
 def exposure_scale(x: float):
     return 200_000_000 * (x ** 7.388)
