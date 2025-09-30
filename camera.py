@@ -71,6 +71,7 @@ class Camera:
         """
         if onPi:
             self.picamera.set_controls({"ExposureTime": exposure_time_us, "AeEnable": False})
+            print("LEL")
 
     def set_auto_exposure(self):
         """
