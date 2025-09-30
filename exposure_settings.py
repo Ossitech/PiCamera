@@ -46,15 +46,16 @@ class ExposureSettings(HidablePanel):
         if event.ui_element != self.exposure_slider:
             return
         
-        if self.exposure_slider.current_value == 0:
+        scaled_value = exposure_scale(self.exposure_slider.current_value)
+
+        if scaled_value == 0:
             self.exposure_label.set_text("Auto Exposure")
         else:
-            scaled_value = exposure_scale(self.exposure_slider.current_value)
             formated_value = format_microseconds(scaled_value)
             self.exposure_label.set_text(f"Exposure Time: {formated_value}")
 
         if self.callback:
-            self.callback(int(self.exposure_slider.current_value))
+            self.callback(int(scaled_value))
     
 def exposure_scale(x: float):
     return 200_000_000 * (x ** 7.388)
