@@ -72,6 +72,7 @@ class CameraApp:
     
     def quit(self):
         self.camera.stop_preview()
+        self.camera.quit()
         self.camera_controls.quit()
         pygame.quit()
         exit()

@@ -85,3 +85,7 @@ class Camera:
     def set_color_gains(self, red, blue):
         if onPi:
             self.picamera.controls.ColourGains = (red, blue)
+    
+    def quit(self):
+        if onPi:
+            self.picamera.close()
