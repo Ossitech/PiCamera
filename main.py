@@ -28,6 +28,7 @@ class CameraApp:
         self.gui = Gui(SCREEN_SIZE)
         self.gui.set_exposure_time_callback(self._on_exposure_changed)
         self.gui.set_exit_callback(self.quit)
+        self.gui.set_wb_callback(self._on_white_balance_changed)
         self.gui.setup()
 
     def run(self):
@@ -81,6 +82,9 @@ class CameraApp:
             return
         
         self.camera.set_exposure_time(exposure_time_us)
+    
+    def _on_white_balance_changed(self, red_gain, blue_gain):
+        pass
 
 
 if __name__ == "__main__":

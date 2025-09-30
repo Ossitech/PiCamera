@@ -12,6 +12,7 @@ class Gui:
         self.screen_height = screen_size[1]
         self.exposure_time_changed_callback = None
         self.exit_callback = None
+        self.wb_callback = None
         self.setup_finished = False
 
     def setup(self):
@@ -27,7 +28,8 @@ class Gui:
             self.ui_manager,
             self.exposure_time_changed_callback,
             self.exit_callback,
-            self.on_menu_closed
+            self.on_menu_closed,
+            self.wb_callback
         )
         self.main_menu.hide()
 
@@ -63,3 +65,9 @@ class Gui:
     
     def on_menu_closed(self):
         self.menu_button.visible = True
+    
+    def set_wb_callback(self, callback):
+        if self.setup_finished:
+            raise Exception("Can't set callback after setup was called!")
+        
+        self.wb_callback = callback
