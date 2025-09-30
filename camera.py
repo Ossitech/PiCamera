@@ -70,21 +70,19 @@ class Camera:
         exposure_time_us: int, Belichtungszeit in Mikrosekunden
         """
         if onPi:
-            # self.picamera.set_controls({"ExposureTime": exposure_time_us, "AeEnable": False})
-            self.picamera.controls.ExposureTime = exposure_time_us
-            self.picamera.controls.AeEnable = False
+            self.picamera.set_controls({"ExposureTime": exposure_time_us, "AeEnable": False})
 
     def set_auto_exposure(self):
         """
         Setzt die Belichtungszeit der Kamera auf Automatik (AE = Auto Exposure).
         """
         if onPi:
-            # self.picamera.set_controls({"AeEnable": True})
-            self.picamera.still_configuration.controls.AeEnable = True
+            self.picamera.set_controls({"AeEnable": True})
+            
     
     def set_color_gains(self, red, blue):
         if onPi:
-            self.picamera.controls.ColourGains = (red, blue)
+            self.picamera.set_controls({"ColourGains": (red, blue)})
     
     def quit(self):
         if onPi:
