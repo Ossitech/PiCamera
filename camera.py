@@ -79,7 +79,6 @@ class Camera:
         """
         if onPi:
             self.picamera.set_controls({"AeEnable": True})
-            
     
     def set_color_gains(self, red, blue):
         if onPi:

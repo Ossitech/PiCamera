@@ -85,7 +85,7 @@ class CameraApp:
         self.camera.set_exposure_time(exposure_time_us)
     
     def _on_white_balance_changed(self, red_gain, blue_gain):
-        pass
+        self.camera.set_color_gains(red_gain, blue_gain)
 
 
 if __name__ == "__main__":
