@@ -42,7 +42,7 @@ class ISOSettings(HidablePanel):
         self.iso_slider.disable()
 
         self.auto_iso_checkbox = pygame_gui.elements.UICheckBox(
-            relative_rect=pygame.Rect((480, 10), (30, 30)),
+            relative_rect=pygame.Rect((430, 10), (30, 30)),
             manager=ui_manager,
             container=self.panel,
             initial_state=True,

@@ -2,6 +2,7 @@ import pygame
 import pygame_gui
 
 from main_menu import MainMenu
+from taking_photo_widget import TakingPhotoWidget
 
 HIDE_OFFSET = 1000
 
@@ -39,11 +40,23 @@ class Gui:
         )
         self.main_menu.hide()
 
+        self.taking_photo_widget = TakingPhotoWidget(self.ui_manager)
+        self.taking_photo_widget.hide()
+
         self.setup_finished = True
     
     def show_menu(self):
         self.menu_button.hide()
         self.main_menu.show()
+    
+    def set_taking_photo_hint_visible(self, value: bool):
+        if value:
+            self.taking_photo_widget.show()
+        else:
+            self.taking_photo_widget.hide()
+
+    def show_result(self):
+        pass
     
     def process_event(self, event):
         self.ui_manager.process_events(event)

@@ -69,7 +69,9 @@ class CameraApp:
                 self.take_photo()
     
     def take_photo(self):
+        self.gui.set_taking_photo_hint_visible(True)
         self.camera.take_photo()
+        self.gui.set_taking_photo_hint_visible(False)
     
     def quit(self):
         self.camera.stop_preview()
