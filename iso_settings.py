@@ -46,7 +46,7 @@ class ISOSettings(HidablePanel):
             manager=ui_manager,
             container=self.panel,
             initial_state=True,
-            text="Auto ISO",
+            text="Auto Gain Control",
         )
 
     def process_event(self, event):
