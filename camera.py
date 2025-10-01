@@ -86,6 +86,14 @@ class Camera:
     def set_auto_white_balance_enabled(self, awb_enabled):
         if onPi:
             self.picamera.set_controls({"AwbEnable": awb_enabled})
+
+    def set_iso_gain(self, analogue_gain: float):
+        if onPi:
+            self.picamera.set_controls({"AnalogueGain": analogue_gain})
+
+    def set_auto_iso_enabled(self, auto_iso_enabled: bool):
+        if onPi:
+            self.picamera.set_controls({"AeEnable": auto_iso_enabled})
     
     def quit(self):
         if onPi:

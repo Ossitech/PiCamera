@@ -28,6 +28,7 @@ class CameraApp:
         self.gui = Gui(SCREEN_SIZE)
         self.gui.set_exposure_time_callback(self._on_exposure_changed)
         self.gui.set_exit_callback(self.quit)
+        self.gui.set_iso_callbacks(self._on_iso_changed, self._on_auto_iso_toggled)
         self.gui.set_wb_callbacks(self._on_white_balance_changed, self._on_auto_white_balance_toggled)
         self.gui.setup()
 
@@ -89,6 +90,12 @@ class CameraApp:
     
     def _on_auto_white_balance_toggled(self, awb_enabled):
         self.camera.set_auto_white_balance_enabled(awb_enabled)
+
+    def _on_iso_changed(self, analogue_gain: float):
+        self.camera.set_iso_gain(analogue_gain)
+
+    def _on_auto_iso_toggled(self, auto_iso_enabled: bool):
+        self.camera.set_auto_iso_enabled(auto_iso_enabled)
 
 
 if __name__ == "__main__":
