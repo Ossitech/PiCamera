@@ -82,7 +82,10 @@ class Camera:
     def set_color_gains(self, red, blue):
         if onPi:
             self.picamera.set_controls({"ColourGains": (red, blue)})
-            self.picamera.set_controls({"AwbEnable": False})
+    
+    def set_auto_white_balance_enabled(self, awb_enabled):
+        if onPi:
+            self.picamera.set_controls({"AwbEnable": awb_enabled})
     
     def quit(self):
         if onPi:

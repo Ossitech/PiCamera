@@ -7,11 +7,13 @@ class WhiteBalanceSettings(HidablePanel):
             self,
             ui_manager: pygame_gui.UIManager,
             back_callback,
-            wb_changed_callback
+            gain_changed_callback,
+            awb_toggle_callback
         ):
         super().__init__(((100, 150), (600, 280)), ui_manager)
 
-        self.callback = wb_changed_callback
+        self.gain_changed_callback = gain_changed_callback
+        self.awb_changed_callback = awb_toggle_callback
 
         self.back_button = pygame_gui.elements.UIButton(
             relative_rect=pygame.Rect((10, 10), (100, 30)),
@@ -54,19 +56,32 @@ class WhiteBalanceSettings(HidablePanel):
             value_range=(0.0, 4.0),
             click_increment=0.01,
         )
+
+        self.awb_checkbox = pygame_gui.elements.UICheckBox(
+            relative_rect=pygame.Rect((420, 10), (30, 30)),
+            manager=ui_manager,
+            container=self.panel,
+            initial_state=True,
+            text="Auto White Balance",
+        )
     
     def process_event(self, event):
-        if event.type != pygame_gui.UI_HORIZONTAL_SLIDER_MOVED:
-            return
+        if event.type == pygame_gui.UI_HORIZONTAL_SLIDER_MOVED:
+            if event.ui_element == self.red_gain_slider:
+                self.update_red_label(self.red_gain_slider.current_value)
+            
+            if event.ui_element == self.blue_gain_slider:
+                self.update_blue_label(self.blue_gain_slider.current_value)
+            
+            if self.gain_changed_callback:
+                self.gain_changed_callback(self.red_gain_slider.current_value, self.blue_gain_slider.current_value)
         
-        if event.ui_element == self.red_gain_slider:
-            self.update_red_label(self.red_gain_slider.current_value)
-        
-        if event.ui_element == self.blue_gain_slider:
-            self.update_blue_label(self.blue_gain_slider.current_value)
-        
-        if self.callback:
-            self.callback(self.red_gain_slider.current_value, self.blue_gain_slider.current_value)
+        elif event.type == pygame_gui.UI_CHECK_BOX_CHECKED:
+            if event.ui_element == self.awb_checkbox:
+                self.awb_changed_callback(True)
+        elif event.type == pygame_gui.UI_CHECK_BOX_CHECKED:
+            if event.ui_element == self.awb_checkbox:
+                self.awb_changed_callback(False)
     
     def update_red_label(self, value):
         self.red_gain_label.set_text(f"Red Gain: {value:.2f}")

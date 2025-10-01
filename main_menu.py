@@ -11,7 +11,8 @@ class MainMenu(HidablePanel):
             exposure_changed_callback,
             exit_callback,
             menu_closed_callback,
-            white_balance_changed_callback,
+            color_gains_changed_callback,
+            awb_toggle_callback
         ):
         super().__init__(((100, 50), (260, 380)), ui_manager)
 
@@ -33,20 +34,28 @@ class MainMenu(HidablePanel):
             command=self.close_menu
         )
 
-        self.exposure_button = pygame_gui.elements.UIButton(
-            manager=ui_manager,
-            container=self.panel,
-            text="Exposure Settings",
-            relative_rect=pygame.Rect((30, 110), (200, 30)),
-            command=self.show_exposure_settings
-        )
-
         self.white_balance_button = pygame_gui.elements.UIButton(
             manager=ui_manager,
             container=self.panel,
             text="White Balance",
-            relative_rect=pygame.Rect((30, 150), (200, 30)),
+            relative_rect=pygame.Rect((30, 110), (200, 30)),
             command=self.show_wb_settings
+        )
+
+        self.exposure_button = pygame_gui.elements.UIButton(
+            manager=ui_manager,
+            container=self.panel,
+            text="Exposure Settings",
+            relative_rect=pygame.Rect((30, 150), (200, 30)),
+            command=self.show_exposure_settings
+        )
+
+        self.iso_button = pygame_gui.elements.UIButton(
+            manager=ui_manager,
+            container=self.panel,
+            text="ISO Settings",
+            relative_rect=pygame.Rect((30, 150), (200, 30)),
+            # command=self.show_exposure_settings
         )
 
         self.exit_button = pygame_gui.elements.UIButton(
@@ -57,19 +66,20 @@ class MainMenu(HidablePanel):
             command=exit_callback
         )
 
+        self.wb_settings = WhiteBalanceSettings(
+            self.ui_manager,
+            self.show_main_menu,
+            color_gains_changed_callback,
+            awb_toggle_callback,
+        )
+        self.wb_settings.hide()
+
         self.exposure_settings = ExposureSettings(
             self.ui_manager,
             exposure_changed_callback,
             self.show_main_menu
         )
         self.exposure_settings.hide()
-
-        self.wb_settings = WhiteBalanceSettings(
-            self.ui_manager,
-            self.show_main_menu,
-            white_balance_changed_callback
-        )
-        self.wb_settings.hide()
     
     def process_event(self, event):
         self.exposure_settings.process_event(event)

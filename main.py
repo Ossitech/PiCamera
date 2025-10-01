@@ -28,7 +28,7 @@ class CameraApp:
         self.gui = Gui(SCREEN_SIZE)
         self.gui.set_exposure_time_callback(self._on_exposure_changed)
         self.gui.set_exit_callback(self.quit)
-        self.gui.set_wb_callback(self._on_white_balance_changed)
+        self.gui.set_wb_callbacks(self._on_white_balance_changed, self._on_auto_white_balance_toggled)
         self.gui.setup()
 
     def run(self):
@@ -86,6 +86,9 @@ class CameraApp:
     
     def _on_white_balance_changed(self, red_gain, blue_gain):
         self.camera.set_color_gains(red_gain, blue_gain)
+    
+    def _on_auto_white_balance_toggled(self, awb_enabled):
+        self.camera.set_auto_white_balance_enabled(awb_enabled)
 
 
 if __name__ == "__main__":
