@@ -82,6 +82,7 @@ class Camera:
     def set_color_gains(self, red, blue):
         if onPi:
             self.picamera.set_controls({"ColourGains": (red, blue)})
+            self.picamera.set_controls({"AwbEnable": False})
     
     def quit(self):
         if onPi:
