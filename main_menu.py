@@ -17,7 +17,7 @@ class MainMenu(HidablePanel):
             color_gains_changed_callback,
             awb_toggle_callback
         ):
-        super().__init__(((100, 50), (260, 380)), ui_manager)
+        super().__init__(((160, 50), (480, 380)), ui_manager)
 
         self.menu_closed_callback = menu_closed_callback
 
@@ -25,7 +25,7 @@ class MainMenu(HidablePanel):
             manager=ui_manager,
             container=self.panel,
             text="Menu",
-            relative_rect=pygame.Rect((10, 10), (100, 50)),
+            relative_rect=pygame.Rect((180, 10), (100, 50)),
             object_id="@title_label"
         )
 
@@ -33,7 +33,7 @@ class MainMenu(HidablePanel):
             manager=ui_manager,
             container=self.panel,
             text="< Back",
-            relative_rect=pygame.Rect((30, 70), (100, 30)),
+            relative_rect=pygame.Rect((30, 30), (100, 50)),
             command=self.close_menu
         )
 
@@ -41,7 +41,7 @@ class MainMenu(HidablePanel):
             manager=ui_manager,
             container=self.panel,
             text="White Balance",
-            relative_rect=pygame.Rect((30, 110), (200, 30)),
+            relative_rect=pygame.Rect((30, 130), (200, 50)),
             command=self.show_wb_settings
         )
 
@@ -49,7 +49,7 @@ class MainMenu(HidablePanel):
             manager=ui_manager,
             container=self.panel,
             text="Exposure Settings",
-            relative_rect=pygame.Rect((30, 150), (200, 30)),
+            relative_rect=pygame.Rect((30, 190), (200, 50)),
             command=self.show_exposure_settings
         )
 
@@ -57,15 +57,15 @@ class MainMenu(HidablePanel):
             manager=ui_manager,
             container=self.panel,
             text="ISO Settings",
-            relative_rect=pygame.Rect((30, 190), (200, 30)),
+            relative_rect=pygame.Rect((30, 250), (200, 50)),
             command=self.show_iso_settings
         )
 
         self.exit_button = pygame_gui.elements.UIButton(
             manager=ui_manager,
             container=self.panel,
-            text="Exit",
-            relative_rect=pygame.Rect((30, 320), (200, 30)),
+            text="Quit",
+            relative_rect=pygame.Rect((350, 30), (100, 50)),
             command=exit_callback
         )
 

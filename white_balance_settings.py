@@ -16,7 +16,7 @@ class WhiteBalanceSettings(HidablePanel):
         self.awb_changed_callback = awb_toggle_callback
 
         self.back_button = pygame_gui.elements.UIButton(
-            relative_rect=pygame.Rect((10, 10), (100, 30)),
+            relative_rect=pygame.Rect((10, 10), (100, 50)),
             manager=ui_manager,
             container=self.panel,
             text="< Back",
@@ -39,6 +39,7 @@ class WhiteBalanceSettings(HidablePanel):
             value_range=(0.0, 4.0),
             click_increment=0.01,
         )
+        self.red_gain_slider.sliding_button.set_minimum_dimensions((50, 40))
         self.red_gain_slider.disable()
 
         self.blue_gain_label = pygame_gui.elements.UILabel(
@@ -57,10 +58,11 @@ class WhiteBalanceSettings(HidablePanel):
             value_range=(0.0, 4.0),
             click_increment=0.01,
         )
+        self.blue_gain_slider.sliding_button.set_minimum_dimensions((50, 40))
         self.blue_gain_slider.disable()
 
         self.awb_checkbox = pygame_gui.elements.UICheckBox(
-            relative_rect=pygame.Rect((420, 10), (30, 30)),
+            relative_rect=pygame.Rect((400, 10), (50, 50)),
             manager=ui_manager,
             container=self.panel,
             initial_state=True,

@@ -22,6 +22,7 @@ class ExposureSettings(HidablePanel):
             value_range=(0.0, 1.0),
             click_increment=0.01,
         )
+        self.exposure_slider.sliding_button.set_minimum_dimensions((50, 40))
 
         self.exposure_label = pygame_gui.elements.UILabel(
             relative_rect=pygame.Rect((100, 15), (400, 50)),
@@ -32,7 +33,7 @@ class ExposureSettings(HidablePanel):
         )
 
         self.back_button = pygame_gui.elements.UIButton(
-            relative_rect=pygame.Rect((10, 10), (100, 30)),
+            relative_rect=pygame.Rect((10, 10), (100, 50)),
             manager=ui_manager,
             container=self.panel,
             text="< Back",

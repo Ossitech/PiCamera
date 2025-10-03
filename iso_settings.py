@@ -16,7 +16,7 @@ class ISOSettings(HidablePanel):
         self.auto_iso_toggle_callback = auto_iso_toggle_callback
 
         self.back_button = pygame_gui.elements.UIButton(
-            relative_rect=pygame.Rect((10, 10), (100, 30)),
+            relative_rect=pygame.Rect((10, 10), (100, 50)),
             manager=ui_manager,
             container=self.panel,
             text="< Back",
@@ -39,10 +39,11 @@ class ISOSettings(HidablePanel):
             value_range=(100, 800),
             click_increment=50,
         )
+        self.iso_slider.sliding_button.set_minimum_dimensions((50, 40))
         self.iso_slider.disable()
 
         self.auto_iso_checkbox = pygame_gui.elements.UICheckBox(
-            relative_rect=pygame.Rect((430, 10), (30, 30)),
+            relative_rect=pygame.Rect((400, 10), (50, 50)),
             manager=ui_manager,
             container=self.panel,
             initial_state=True,
