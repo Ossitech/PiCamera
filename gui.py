@@ -55,7 +55,7 @@ class Gui:
         else:
             self.taking_photo_widget.hide()
 
-    def show_result(self):
+    def show_result(self, fileName):
         pass
     
     def process_event(self, event):

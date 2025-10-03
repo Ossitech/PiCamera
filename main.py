@@ -21,7 +21,7 @@ class CameraApp:
         self.delta = self.clock.tick(FPS)
         self.running = False
         self.no_signal_image = pygame.image.load("data/no_signal.png")
-        self.camera = camera.Camera(SCREEN_SIZE, FPS)
+        self.camera = camera.Camera(SCREEN_SIZE, FPS, self._on_taking_photo_finished)
         self.current_preview_frame = None
         self.camera_controls = hardware_controls.CameraControls()
 
@@ -98,6 +98,10 @@ class CameraApp:
 
     def _on_auto_iso_toggled(self, auto_iso_enabled: bool):
         self.camera.set_auto_iso_enabled(auto_iso_enabled)
+    
+    def _on_taking_photo_finished(self, fileName):
+        self.gui.set_taking_photo_hint_visible(False)
+        self.gui.show_result(fileName)
 
 
 if __name__ == "__main__":

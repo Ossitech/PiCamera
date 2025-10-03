@@ -14,9 +14,10 @@ PHOTOS_PATH = "/home/ossitech/Synchronisierte Dateien/Pi Camera/photos"
 VIDEOS_PATH = "/home/ossitech/Synchronisierte Dateien/Pi Camera/videos"
 
 class Camera:
-    def __init__(self, screen_size, preview_framerate):
+    def __init__(self, screen_size, preview_framerate, photo_callback):
         self.screen_size = screen_size
         self.preview_framerate = preview_framerate
+        self.photo_callback = photo_callback
 
         if onPi:
             self.picamera = picamera2.Picamera2()
@@ -33,6 +34,7 @@ class Camera:
         self._preview_thread = Thread(target=self.preview_loop)
 
         self._clock = pygame.time.Clock()
+        self.photo_thread = None
     
     def start_preview(self):
         if onPi:
@@ -60,9 +62,19 @@ class Camera:
             "BGR")
     
     def take_photo(self):
-        filename = time.strftime("%Y.%m.%d_%H-%M-%S.jpg")
+        if self.photo_thread:
+            # Wait if we are currently taking a picture.
+            self.photo_thread.join()
+
+        self.photo_thread = Thread(target=self._take_photo_thread)
+        self.photo_thread.start()
+    
+    def _take_photo_thread(self):
+        fileName = time.strftime("%Y.%m.%d_%H-%M-%S.jpg")
         if onPi:
-            self.picamera.switch_mode_and_capture_file(self.photo_config, os.path.join(PHOTOS_PATH, filename))
+            self.picamera.switch_mode_and_capture_file(self.photo_config, os.path.join(PHOTOS_PATH, fileName))
+        if self.photo_callback:
+            self.photo_callback(fileName)
 
     def set_exposure_time(self, exposure_time_us):
         """
