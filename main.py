@@ -24,6 +24,9 @@ class CameraApp:
         self.camera = camera.Camera(SCREEN_SIZE, FPS, self._on_taking_photo_finished)
         self.current_preview_frame = None
         self.camera_controls = hardware_controls.CameraControls()
+        self.camera.enable_auto_exposure()
+        self.camera.set_auto_iso_enabled(True)
+        self.camera.set_auto_white_balance_enabled(True)
 
         self.gui = Gui(SCREEN_SIZE)
         self.gui.set_exposure_time_callback(self._on_exposure_changed)
@@ -81,7 +84,7 @@ class CameraApp:
     
     def _on_exposure_changed(self, exposure_time_us: int):
         if exposure_time_us == 0:
-            self.camera.set_auto_exposure()
+            self.camera.enable_auto_exposure()
             return
         
         self.camera.set_exposure_time(exposure_time_us)

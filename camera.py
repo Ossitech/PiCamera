@@ -84,7 +84,7 @@ class Camera:
         if onPi:
             self.picamera.set_controls({"ExposureTime": exposure_time_us, "AeEnable": False})
 
-    def set_auto_exposure(self):
+    def enable_auto_exposure(self):
         """
         Setzt die Belichtungszeit der Kamera auf Automatik (AE = Auto Exposure).
         """
