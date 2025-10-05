@@ -31,6 +31,8 @@ class ResultView(HidablePanel):
 
         self.progress_bar.set_current_progress(100.0 - seconds * 20.0)
 
+        print(seconds)
+
         if seconds > 5:
             self.reset()
     
