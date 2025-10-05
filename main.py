@@ -33,6 +33,7 @@ class CameraApp:
         self.gui.set_exit_callback(self.quit)
         self.gui.set_iso_callbacks(self._on_iso_changed, self._on_auto_iso_toggled)
         self.gui.set_wb_callbacks(self._on_white_balance_changed, self._on_auto_white_balance_toggled)
+        self.gui.set_take_photo_callback(self.take_photo)
         self.gui.setup()
 
     def run(self):
@@ -101,9 +102,9 @@ class CameraApp:
     def _on_auto_iso_toggled(self, auto_iso_enabled: bool):
         self.camera.set_auto_iso_enabled(auto_iso_enabled)
     
-    def _on_taking_photo_finished(self, fileName):
+    def _on_taking_photo_finished(self, filePath):
         self.gui.set_taking_photo_hint_visible(False)
-        self.gui.show_result(fileName)
+        self.gui.show_result(filePath)
 
 
 if __name__ == "__main__":

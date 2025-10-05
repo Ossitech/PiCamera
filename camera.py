@@ -71,10 +71,11 @@ class Camera:
     
     def _take_photo_thread(self):
         fileName = time.strftime("%Y.%m.%d_%H-%M-%S.jpg")
+        filePath = os.path.join(PHOTOS_PATH, fileName)
         if onPi:
-            self.picamera.switch_mode_and_capture_file(self.photo_config, os.path.join(PHOTOS_PATH, fileName))
+            self.picamera.switch_mode_and_capture_file(self.photo_config, filePath)
         if self.photo_callback:
-            self.photo_callback(fileName)
+            self.photo_callback(filePath)
 
     def set_exposure_time(self, exposure_time_us):
         """

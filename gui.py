@@ -3,6 +3,7 @@ import pygame_gui
 
 from main_menu import MainMenu
 from taking_photo_widget import TakingPhotoWidget
+from result_view import ResultView
 
 HIDE_OFFSET = 1000
 
@@ -18,6 +19,7 @@ class Gui:
         self.iso_changed_callback = None
         self.auto_iso_toggle_callback = None
         self.setup_finished = False
+        self.take_photo_callback = None
 
     def setup(self):
         self.ui_manager = pygame_gui.UIManager(self.screen_size, "data/theme.json")
@@ -43,6 +45,16 @@ class Gui:
         self.taking_photo_widget = TakingPhotoWidget(self.ui_manager)
         self.taking_photo_widget.hide()
 
+        self.result_view = ResultView(self.ui_manager, self.screen_size)
+        self.result_view.reset()
+
+        self.take_photo_button = pygame_gui.elements.UIButton(
+            relative_rect=pygame.Rect((self.screen_width - 60, 10), (50, 40)),
+            text='Photo',
+            manager=self.ui_manager,
+            command=self.take_photo_callback
+        )
+
         self.setup_finished = True
     
     def show_menu(self):
@@ -55,8 +67,8 @@ class Gui:
         else:
             self.taking_photo_widget.hide()
 
-    def show_result(self, fileName):
-        pass
+    def show_result(self, filePath):
+        self.result_view.show_result(filePath)
     
     def process_event(self, event):
         self.ui_manager.process_events(event)
@@ -66,6 +78,7 @@ class Gui:
         self.ui_manager.update(delta)
     
     def draw(self, surface: pygame.Surface):
+        self.result_view.draw(surface)
         self.ui_manager.draw_ui(surface)
     
     # callback must be a function that receives an int value,
@@ -98,3 +111,6 @@ class Gui:
 
         self.iso_changed_callback = iso_changed_callback
         self.auto_iso_toggle_callback = auto_iso_toggle_callback
+    
+    def set_take_photo_callback(self, callback):
+        self.take_photo_callback = callback
