@@ -7,6 +7,8 @@ class ResultView(HidablePanel):
     def __init__(self, ui_manager, screen_size):
         super().__init__(((0, screen_size[1] - 30), (screen_size[0], 30)), ui_manager)
 
+        self.screen_size = screen_size
+
         self.progress_bar = pygame_gui.elements.UIProgressBar(
             manager=ui_manager,
             container=self.panel,
