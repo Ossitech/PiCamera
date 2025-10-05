@@ -26,7 +26,7 @@ class ResultView(HidablePanel):
         if self.result_image == None:
             return
         
-        if not surface.get_locked():
+        if not surface.get_locked() and not self.result_image.get_locked():
             surface.blit(self.result_image)
         
         now = time.time()
