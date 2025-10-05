@@ -26,14 +26,13 @@ class ResultView(HidablePanel):
         if self.result_image == None:
             return
         
-        surface.blit(self.result_image)
+        if not surface.get_locked():
+            surface.blit(self.result_image)
         
         now = time.time()
         seconds = now - self.timestamp
 
-        self.progress_bar.set_current_progress(100.0 - seconds * 20.0)
-
-        print(seconds)
+        self.progress_bar.set_current_progress(seconds * 20.0)
 
         if seconds > 5:
             self.reset()
