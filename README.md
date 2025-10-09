@@ -28,10 +28,14 @@ on some system packages.
 
 Install the requirements from `requirements.txt` using pip
 in your virtual environment:
-```pip install -r requirements.txt```
+```
+pip install -r requirements.txt
+```
 
 Run the program:
-```python3 main.py```
+```
+python3 main.py
+```
 
 ## Hardware
 ### Lens
