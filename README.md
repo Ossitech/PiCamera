@@ -20,8 +20,8 @@ parameters the camera module and the optic provides.
 ## Installation
 Clone the repo onto your Raspberry Pi and create a python virtual environment using
 the system site packages:
-```python3
--m venv --system-site-packages env
+```
+python3 -m venv --system-site-packages venv
 ```
 This is necessary for picamera2 to work proberly because it depends
 on some system packages.
@@ -29,12 +29,12 @@ on some system packages.
 Install the requirements from `requirements.txt` using pip
 in your virtual environment:
 ```
-pip install -r requirements.txt
+venv/bin/pip install -r requirements.txt
 ```
 
 Run the program:
 ```
-python3 main.py
+venv/bin/python3 main.py
 ```
 
 ## Hardware
