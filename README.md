@@ -18,7 +18,7 @@ the resulting picture is influenced by the many
 parameters the camera module and the optic provides.
 
 ## Installation
-Clone the repo on your Raspberry Pi and create a python virtual environment using
+Clone the repo onto your Raspberry Pi and create a python virtual environment using
 the system site packages:
 ```python3
 -m venv --system-site-packages env
