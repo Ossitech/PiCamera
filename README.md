@@ -20,7 +20,11 @@ parameters the camera module and the optic provides.
 ## Installation
 Clone the repo on your Raspberry Pi and create a python virtual environment using
 the system site packages:
-```python3 -m venv --system-site-packages env```
+```python3
+-m venv --system-site-packages env
+```
+This is necessary for picamera2 to work proberly because it depends
+on some system packages.
 
 Install the requirements from `requirements.txt` using pip
 in your virtual environment:
@@ -53,7 +57,7 @@ so I had to design and 3d print an SD-Card holder
 that could be screwed onto the underside of the Pi
 to hold the SD-Card in place, on which the OS is stored.
 This of course won't be necessary for others
-but it had to considered while designing the camera housing.
+but it had to be considered while designing the camera housing.
 
 ### Screen
 The screen is a touch screen with a resolution of 800 x 480 pixels.
