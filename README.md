@@ -57,7 +57,8 @@ the value of ```PHOTOS_PATH``` in ```camera.py```
 
 ### Example pictures
 These where taken during the development process.
-I added the settings the picture where taken with.
+I added the settings the pictures where taken with.
+
 ![image_1](example%20pictures/winter_landscape.jpg)
 ISO: auto, exposure: auto, color gains: auto
 
