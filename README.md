@@ -37,6 +37,45 @@ Run the program:
 venv/bin/python3 main.py
 ```
 
+## Usage
+The python program creates a fullscreen window that shows the
+camera preview with the current camera configuration.
+To take a picture, press the physical photo button on the camera
+or tap the photo button in the top right corner of the screen.
+After a picture is taken, the resulting image is shown
+on screen for 5 seconds.
+To change configuration parameters of the
+camera module tap the menu button
+in the top left corner.
+The menu shows multiple buttons that lead
+to sub menus.
+This enables the user to change paramters like
+ISO value, exposure time and color gains.
+Taken pictures are saved with the current time stamp as file name.
+The output directory can by changed by changing
+the value of ```PHOTOS_PATH``` in ```camera.py```
+
+### Example pictures
+These where taken during the development process.
+I added the settings the picture where taken with.
+![image_1](example%20pictures/winter_landscape.jpg)
+ISO: auto, exposure: auto, color gains: auto
+
+![image_2](example%20pictures/winter_cabin.jpg)
+ISO: auto, exposure: auto, color gains: auto
+
+![image_3](example%20pictures/leaves.jpg)
+ISO: 100, exposure: auto, color gains: red 2.0, blue 2.7
+
+![image_4](example%20pictures/heart.jpg)
+ISO: 100, exposure: 2 seconds, color gains: red 2.0, blue 3.0
+
+![image_5](example%20pictures/fall.jpg)
+ISO: auto, exposure: auto, color gains: red 2.0, blue 2.7
+
+![image_6](example%20pictures/door.jpg)
+ISO: auto, exposure: auto, color gains: red 2.0, blue 2.7
+
 ## Hardware
 ### Lens
 For this project I am currently using the official Raspberry Pi
